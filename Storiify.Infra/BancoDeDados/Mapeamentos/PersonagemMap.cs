@@ -14,14 +14,16 @@ namespace Storiify.Infra.BancoDeDados.Mapeamentos
 
             builder.ToTable(Tabela);
 
-            builder.HasKey(u => u.Id);
+            builder.HasKey(p => p.Id);
 
-            builder.OwnsOne(u => u.Nome, n =>
+            builder.Property(p => p.Id).HasMaxLength(PadroesTamanho.Id);
+
+            builder.OwnsOne(p => p.Nome, n =>
             {
                 n.Property(no => no.Texto).IsRequired().HasMaxLength(PadroesTamanho.MaxNome).HasColumnName("Nome");
             });
 
-            builder.OwnsOne(u => u.Foto, f =>
+            builder.OwnsOne(p => p.Foto, f =>
             {
                 f.Property(fo => fo.IdPublico).HasMaxLength(PadroesTamanho.MaxFotoIdPublico).HasColumnName("FotoIdPublico");
                 f.Property(fo => fo.Url).HasMaxLength(PadroesTamanho.MaxFotoUrl).HasColumnName("FotoUrl");
@@ -33,8 +35,8 @@ namespace Storiify.Infra.BancoDeDados.Mapeamentos
         /// </summary>
         private static void IgnorarVos(EntityTypeBuilder<Personagem> builder)
         {
-            builder.Ignore(u => u.Nome);
-            builder.Ignore(u => u.Foto);
+            builder.Ignore(p => p.Nome);
+            builder.Ignore(p => p.Foto);
         }
     }
 }

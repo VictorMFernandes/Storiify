@@ -2,6 +2,8 @@
 {
     public class PadroesTamanho
     {
+        public const int Id = 36;
+
         public const int MaxLogin = 100;
         public const int MinLogin = 6;
 

@@ -16,6 +16,8 @@ namespace Storiify.Infra.BancoDeDados.Mapeamentos
 
             builder.HasKey(u => u.Id);
 
+            builder.Property(u => u.Id).HasMaxLength(PadroesTamanho.Id);
+
             builder.OwnsOne(u => u.Email, e =>
             {
                 e.Property(em => em.Endereco).IsRequired().HasMaxLength(PadroesTamanho.MaxEmail).HasColumnName("Email");

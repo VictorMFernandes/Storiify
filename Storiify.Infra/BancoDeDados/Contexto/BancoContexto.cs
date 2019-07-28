@@ -22,6 +22,7 @@ namespace Storiify.Infra.BancoDeDados.Contexto
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new HistoriaMap());
             modelBuilder.ApplyConfiguration(new PersonagemMap());
+            modelBuilder.ApplyConfiguration(new SerieHistoriasMap());
         }
     }
 }

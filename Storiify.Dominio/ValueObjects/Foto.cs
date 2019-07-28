@@ -8,13 +8,25 @@ namespace Storiify.Dominio.ValueObjects
     {
         #region Propriedades
 
-        public string Url { get; }
-        public string IdPublico { get; }
+        public string Url { get; private set; }
+        public string IdPublico { get; private set; }
 
         #endregion
 
         #region Construtores
 
+        /// <summary>
+        /// Construtor para o ORM, usado na inicialização das entidades
+        /// </summary>
+        public Foto()
+        {
+            Url = string.Empty;
+            IdPublico = string.Empty;
+        }
+
+        /// <summary>
+        /// Construtor principal
+        /// </summary>
         public Foto(string url, string idPublico)
         {
             Url = url;
@@ -35,13 +47,13 @@ namespace Storiify.Dominio.ValueObjects
         protected override void Validar()
         {
             AddNotifications(new ValidationContract()
-                                .IsUrl(Url, "Url", "A Url da imagem não é válida")
+                                .IsUrl(Url, nameof(Foto)+nameof(Url), string.Format(PadroesMensagens.UrlInvalida, Url))
                                 .HasMaxLen(Url, PadroesTamanho.MaxFotoUrl
-                                    , "Url"
-                                    , $"A Url de uma imagem deve ter no máximo {PadroesTamanho.MaxFotoUrl} caracteres")
+                                    , nameof(Foto) + nameof(Url)
+                                    , PadroesMensagens.UrlMax)
                                 .HasMaxLen(IdPublico, PadroesTamanho.MaxFotoIdPublico
-                                    , "PublicId"
-                                    , $"O Id Público de uma foto deve ter no máximo {PadroesTamanho.MaxFotoIdPublico} caracteres"));
+                                    , nameof(Foto) + nameof(IdPublico)
+                                    , PadroesMensagens.IdPublicoMax));
         }
 
         #endregion

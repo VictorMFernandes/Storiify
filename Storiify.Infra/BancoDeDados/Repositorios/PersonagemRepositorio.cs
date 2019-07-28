@@ -19,7 +19,7 @@ namespace Storiify.Infra.BancoDeDados.Repositorios
         {
             return await _contexto
                         .Personagens
-                        .FirstOrDefaultAsync(x => x.Id == id);
+                        .FirstOrDefaultAsync(x => x.PossuiId(id));
         }
 
         public void Criar(Personagem usuario)

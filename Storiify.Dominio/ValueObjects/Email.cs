@@ -1,5 +1,6 @@
 ﻿using Storiify.Compartilhado.Entidades;
 using FluentValidator.Validation;
+using Storiify.Compartilhado.Padroes;
 
 namespace Storiify.Dominio.ValueObjects
 {
@@ -31,7 +32,7 @@ namespace Storiify.Dominio.ValueObjects
         protected override void Validar()
         {
             AddNotifications(new ValidationContract()
-                .IsEmail(Endereco, "Email", "E-mail inválido")
+                .IsEmail(Endereco, nameof(Email), string.Format(PadroesMensagens.EmailInvalido, Endereco))
             );
         }
 

@@ -4,14 +4,12 @@ using System.Collections.Generic;
 
 namespace Storiify.Dominio.Entidades
 {
-    public class Historia : Entidade
+    public class SerieHistorias : Entidade
     {
         #region Propriedade
 
         public Nome Nome { get; private set; }
-        public Foto Foto { get; private set; }
-        public SerieHistorias SerieHistorias { get; private set; }
-        public ICollection<Personagem> Personagens { get; private set; }
+        public ICollection<Historia> Historias { get; set; }
 
         #endregion
 
@@ -20,23 +18,21 @@ namespace Storiify.Dominio.Entidades
         /// <summary>
         /// Construtor para o ORM
         /// </summary>
-        private Historia() { }
+        private SerieHistorias() { }
 
         /// <summary>
         /// Construtor principal
         /// </summary>
-        public Historia(Nome nome)
+        public SerieHistorias(Nome nome)
         {
             Nome = nome;
-            Foto = new Foto();
-
             Validar();
         }
 
         /// <summary>
         /// Construtor para semear
         /// </summary>
-        public Historia(string id, Nome nome)
+        public SerieHistorias(string id, Nome nome)
             : this(nome)
         {
             Id = id;
@@ -53,24 +49,14 @@ namespace Storiify.Dominio.Entidades
 
         protected override void InicializarColecoes()
         {
-            Personagens = new List<Personagem>();
+            Historias = new List<Historia>();
         }
 
         protected override void Validar()
         {
-            AddNotifications(Nome, Foto);
+            AddNotifications(Nome);
         }
 
         #endregion
-
-        public void AdicionarPersonagem(Personagem personagem)
-        {
-            Personagens.Add(personagem);
-        }
-
-        public void DefinirSerieHistorias(SerieHistorias serieHistorias)
-        {
-            SerieHistorias = serieHistorias;
-        }
     }
 }

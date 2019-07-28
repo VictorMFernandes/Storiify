@@ -52,7 +52,7 @@ namespace Storiify.Api.Extensoes
                         Title = nomeAplicacao,
                         Version = versao,
                         Description = $"UsuarioId Padrão: {PadroesString.UsuarioId}\n" +
-                                      $"HistoriaId Padrão: {PadroesString.HistoriaId}"
+                                      $"HistoriaId Padrão: {PadroesString.Historia1Id}"
                     }
                 );
 

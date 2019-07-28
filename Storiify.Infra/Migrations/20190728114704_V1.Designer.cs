@@ -9,7 +9,7 @@ using Storiify.Infra.BancoDeDados.Contexto;
 namespace Storiify.Infra.Migrations
 {
     [DbContext(typeof(BancoContexto))]
-    [Migration("20190727184822_V1")]
+    [Migration("20190728114704_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,11 +21,16 @@ namespace Storiify.Infra.Migrations
             modelBuilder.Entity("Storiify.Dominio.Entidades.Historia", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
+
+                    b.Property<string>("SerieHistoriasId");
 
                     b.Property<string>("UsuarioId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SerieHistoriasId");
 
                     b.HasIndex("UsuarioId");
 
@@ -35,7 +40,8 @@ namespace Storiify.Infra.Migrations
             modelBuilder.Entity("Storiify.Dominio.Entidades.Personagem", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
 
                     b.Property<string>("HistoriaId");
 
@@ -46,10 +52,22 @@ namespace Storiify.Infra.Migrations
                     b.ToTable("tb_personagem");
                 });
 
+            modelBuilder.Entity("Storiify.Dominio.Entidades.SerieHistorias", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tb_serie_historias");
+                });
+
             modelBuilder.Entity("Storiify.Dominio.Entidades.Usuario", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
 
                     b.Property<DateTime>("DtCriacao");
 
@@ -62,6 +80,10 @@ namespace Storiify.Infra.Migrations
 
             modelBuilder.Entity("Storiify.Dominio.Entidades.Historia", b =>
                 {
+                    b.HasOne("Storiify.Dominio.Entidades.SerieHistorias", "SerieHistorias")
+                        .WithMany("Historias")
+                        .HasForeignKey("SerieHistoriasId");
+
                     b.HasOne("Storiify.Dominio.Entidades.Usuario")
                         .WithMany("Historias")
                         .HasForeignKey("UsuarioId");
@@ -152,6 +174,31 @@ namespace Storiify.Infra.Migrations
                             b1.HasOne("Storiify.Dominio.Entidades.Personagem")
                                 .WithOne("Nome")
                                 .HasForeignKey("Storiify.Dominio.ValueObjects.Nome", "PersonagemId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
+            modelBuilder.Entity("Storiify.Dominio.Entidades.SerieHistorias", b =>
+                {
+                    b.OwnsOne("Storiify.Dominio.ValueObjects.Nome", "Nome", b1 =>
+                        {
+                            b1.Property<string>("SerieHistoriasId");
+
+                            b1.Property<string>("Texto")
+                                .IsRequired()
+                                .HasColumnName("Nome")
+                                .HasMaxLength(60);
+
+                            b1.HasKey("SerieHistoriasId");
+
+                            b1.HasIndex("Texto")
+                                .IsUnique();
+
+                            b1.ToTable("tb_serie_historias");
+
+                            b1.HasOne("Storiify.Dominio.Entidades.SerieHistorias")
+                                .WithOne("Nome")
+                                .HasForeignKey("Storiify.Dominio.ValueObjects.Nome", "SerieHistoriasId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

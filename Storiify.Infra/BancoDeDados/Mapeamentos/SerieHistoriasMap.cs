@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Storiify.Infra.BancoDeDados.Mapeamentos
 {
-    internal class HistoriaMap : IEntityTypeConfiguration<Historia>
+    internal class SerieHistoriasMap : IEntityTypeConfiguration<SerieHistorias>
     {
-        public const string Tabela = "tb_historia";
-        public void Configure(EntityTypeBuilder<Historia> builder)
+        public const string Tabela = "tb_serie_historias";
+        public void Configure(EntityTypeBuilder<SerieHistorias> builder)
         {
             IgnorarVos(builder);
 
@@ -21,22 +21,16 @@ namespace Storiify.Infra.BancoDeDados.Mapeamentos
             builder.OwnsOne(h => h.Nome, n =>
             {
                 n.Property(no => no.Texto).IsRequired().HasMaxLength(PadroesTamanho.MaxNome).HasColumnName("Nome");
-            });
-
-            builder.OwnsOne(h => h.Foto, f =>
-            {
-                f.Property(fo => fo.IdPublico).HasMaxLength(PadroesTamanho.MaxFotoIdPublico).HasColumnName("FotoIdPublico");
-                f.Property(fo => fo.Url).HasMaxLength(PadroesTamanho.MaxFotoUrl).HasColumnName("FotoUrl");
+                n.HasIndex(no => no.Texto).IsUnique();
             });
         }
 
         /// <summary>
         /// Ignora todos os VOs da entidade, deve ser o primeiro elemento a ser mapeado
         /// </summary>
-        private static void IgnorarVos(EntityTypeBuilder<Historia> builder)
+        private static void IgnorarVos(EntityTypeBuilder<SerieHistorias> builder)
         {
             builder.Ignore(h => h.Nome);
-            builder.Ignore(h => h.Foto);
         }
     }
 }

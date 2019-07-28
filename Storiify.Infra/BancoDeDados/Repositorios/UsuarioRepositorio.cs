@@ -8,6 +8,7 @@ using Storiify.Infra.BancoDeDados.Mapeamentos;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Storiify.Dominio.Comandos.HistoriaComandos.Saidas;
 
 namespace Storiify.Infra.BancoDeDados.Repositorios
 {
@@ -24,21 +25,26 @@ namespace Storiify.Infra.BancoDeDados.Repositorios
         {
             return await _contexto
                         .Usuarios
-                        .FirstOrDefaultAsync(x => x.Id == id);
+                        .FirstOrDefaultAsync(x => x.PossuiId(id));
         }
 
         public async Task<AutenticarUsuarioComandoResultado> PegarPorLogin(string login)
         {
-            var queryUsuario = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
+            var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
                                 $"WHERE Login = '{login}'";
             
 
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();
-                var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(queryUsuario);
+                var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query);
 
                 if (resultado == null) return null;
+
+                query = $"SELECT Id, Nome, FotoUrl, FROM {HistoriaMap.Tabela} " +
+                        $"WHERE UsuarioId = '{resultado.Id}'";
+
+                resultado.Historias = await conn.QueryAsync<PegarHistoriasComandoResultado>(query);
 
                 return resultado;
             }
@@ -57,7 +63,7 @@ namespace Storiify.Infra.BancoDeDados.Repositorios
         {
             return await _contexto.Usuarios
                                     .AsNoTracking()
-                                    .AnyAsync(x => x.Id == id);
+                                    .AnyAsync(x => x.PossuiId(id));
         }
 
         public async Task<bool> EmailExiste(string email)

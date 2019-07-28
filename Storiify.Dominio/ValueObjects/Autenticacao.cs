@@ -31,7 +31,7 @@ namespace Storiify.Dominio.ValueObjects
             Ativo = true;
 
             AddNotifications(new ValidationContract()
-                .AreEquals(senha, confirmacaoSenha, "Senha", "As senhas não coincidem")
+                .AreEquals(senha, confirmacaoSenha, nameof(Senha), PadroesMensagens.SenhasDiferentes)
             );
 
             Validar();
@@ -101,12 +101,12 @@ namespace Storiify.Dominio.ValueObjects
             AddNotifications(new ValidationContract()
                 .HasMinLen(Login
                             , PadroesTamanho.MinLogin
-                            , "Login"
-                            , $"O login deve conter no mínimo {PadroesTamanho.MinLogin} caracteres")
+                            , nameof(Login)
+                            , PadroesMensagens.LoginMin)
                 .HasMaxLen(Login
                             , PadroesTamanho.MaxLogin
-                            , "Login"
-                            , $"O login deve conter no máximo {PadroesTamanho.MaxLogin} caracteres")
+                            , nameof(Login)
+                            , PadroesMensagens.LoginMax)
             );
         }
 

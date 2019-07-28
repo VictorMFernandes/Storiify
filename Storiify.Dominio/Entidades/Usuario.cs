@@ -21,20 +21,29 @@ namespace Storiify.Dominio.Entidades
 
         #region Construtores
 
+        /// <summary>
+        /// Construtor para o ORM
+        /// </summary>
         private Usuario() { }
 
+        /// <summary>
+        /// Construtor principal
+        /// </summary>
         public Usuario(Nome nome, Email email, Autenticacao autenticacao)
         {
             Nome = nome;
             Email = email;
             Autenticacao = autenticacao;
-            Foto = new Foto(string.Empty, string.Empty);
+            Foto = new Foto();
             DtCriacao = DateTime.Now;
             DtUltimaAtividade = DateTime.Now;
 
             Validar();
         }
 
+        /// <summary>
+        /// Construtor para semear
+        /// </summary>
         public Usuario(string id, Nome nome, Email email, Autenticacao autenticacao)
             : this(nome, email, autenticacao)
         {
@@ -52,7 +61,7 @@ namespace Storiify.Dominio.Entidades
 
         protected override void Validar()
         {
-            AddNotifications(Nome, Email, Autenticacao);
+            AddNotifications(Nome, Email, Autenticacao, Foto);
         }
 
         protected override void InicializarColecoes()

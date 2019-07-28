@@ -1,6 +1,5 @@
 ﻿using Storiify.Compartilhado.Entidades;
 using Storiify.Dominio.ValueObjects;
-using System;
 
 namespace Storiify.Dominio.Entidades
 {
@@ -15,11 +14,29 @@ namespace Storiify.Dominio.Entidades
 
         #region Construtores
 
-        public Personagem() { }
+        /// <summary>
+        /// Construtor para o ORM
+        /// </summary>
+        private Personagem() { }
 
+        /// <summary>
+        /// Construtor principal
+        /// </summary>
         public Personagem(Nome nome)
         {
             Nome = nome;
+            Foto = new Foto();
+
+            Validar();
+        }
+
+        /// <summary>
+        /// Construtor para semear
+        /// </summary>
+        public Personagem(string id, Nome nome)
+            : this(nome)
+        {
+            Id = id;
         }
 
         #endregion
@@ -33,12 +50,11 @@ namespace Storiify.Dominio.Entidades
 
         protected override void InicializarColecoes()
         {
-            throw new NotImplementedException();
         }
 
         protected override void Validar()
         {
-            AddNotifications(Nome);
+            AddNotifications(Nome, Foto);
         }
 
         #endregion

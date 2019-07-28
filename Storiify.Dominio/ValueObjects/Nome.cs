@@ -17,6 +17,7 @@ namespace Storiify.Dominio.ValueObjects
         public Nome(string texto)
         {
             Texto = texto;
+
             Validar();
         }
 
@@ -33,11 +34,11 @@ namespace Storiify.Dominio.ValueObjects
         {
             AddNotifications(new ValidationContract()
                 .HasMinLen(Texto, PadroesTamanho.MinNome
-                    , "Nome"
-                    , $"O nome deve conter no mínimo {PadroesTamanho.MinNome} caracteres")
+                    , nameof(Nome)
+                    , PadroesMensagens.NomeMin)
                 .HasMaxLen(Texto, PadroesTamanho.MaxNome
-                    , "Nome"
-                    , $"O nome deve conter no máximo {PadroesTamanho.MaxNome} caracteres")
+                    , nameof(Nome)
+                    , PadroesMensagens.NomeMax)
             );
         }
 

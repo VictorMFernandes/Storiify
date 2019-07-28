@@ -1,6 +1,7 @@
 ﻿using Storiify.Compartilhado.Entidades;
 using Storiify.Compartilhado.Extensoes;
 using FluentValidator.Validation;
+using Storiify.Compartilhado.Padroes;
 
 namespace Storiify.Dominio.ValueObjects
 {
@@ -33,7 +34,7 @@ namespace Storiify.Dominio.ValueObjects
         protected override void Validar()
         {
             AddNotifications(new ValidationContract()
-                .IsTrue(Numero.TelefoneValido(), "Numero", "Telefone inválido")
+                .IsTrue(Numero.TelefoneValido(), nameof(Telefone), PadroesMensagens.TelefoneInvalido)
             );
         }
 

@@ -1,4 +1,6 @@
 ﻿using FluentValidator;
+using FluentValidator.Validation;
+using Storiify.Compartilhado.Padroes;
 using System;
 
 namespace Storiify.Compartilhado.Entidades
@@ -11,10 +13,22 @@ namespace Storiify.Compartilhado.Entidades
         {
             Id = Guid.NewGuid().ToString();
             InicializarColecoes();
+            ValidarEntidade();
+        }
+
+        private void ValidarEntidade()
+        {
+            AddNotifications(new ValidationContract()
+                .HasLen(Id, PadroesTamanho.Id, nameof(Id), string.Format(PadroesMensagens.IdInvalido, Id)));
         }
 
         protected abstract void InicializarColecoes();
         protected abstract void Validar();
         public abstract override string ToString();
+
+        public bool PossuiId(string id)
+        {
+            return (Id == id);
+        }
     }
 }

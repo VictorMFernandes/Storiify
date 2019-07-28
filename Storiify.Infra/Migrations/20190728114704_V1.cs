@@ -8,10 +8,22 @@ namespace Storiify.Infra.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "tb_serie_historias",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    Nome = table.Column<string>(maxLength: 60, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_serie_historias", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tb_usuario",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
                     Nome = table.Column<string>(maxLength: 60, nullable: false),
                     Email = table.Column<string>(maxLength: 160, nullable: false),
                     Login = table.Column<string>(maxLength: 100, nullable: false),
@@ -31,15 +43,22 @@ namespace Storiify.Infra.Migrations
                 name: "tb_historia",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
                     Nome = table.Column<string>(maxLength: 60, nullable: false),
                     FotoUrl = table.Column<string>(maxLength: 160, nullable: true),
                     FotoIdPublico = table.Column<string>(maxLength: 25, nullable: true),
+                    SerieHistoriasId = table.Column<string>(nullable: true),
                     UsuarioId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_historia", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tb_historia_tb_serie_historias_SerieHistoriasId",
+                        column: x => x.SerieHistoriasId,
+                        principalTable: "tb_serie_historias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_tb_historia_tb_usuario_UsuarioId",
                         column: x => x.UsuarioId,
@@ -52,7 +71,7 @@ namespace Storiify.Infra.Migrations
                 name: "tb_personagem",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
                     Nome = table.Column<string>(maxLength: 60, nullable: false),
                     FotoUrl = table.Column<string>(maxLength: 160, nullable: true),
                     FotoIdPublico = table.Column<string>(maxLength: 25, nullable: true),
@@ -70,6 +89,11 @@ namespace Storiify.Infra.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_tb_historia_SerieHistoriasId",
+                table: "tb_historia",
+                column: "SerieHistoriasId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tb_historia_UsuarioId",
                 table: "tb_historia",
                 column: "UsuarioId");
@@ -78,6 +102,12 @@ namespace Storiify.Infra.Migrations
                 name: "IX_tb_personagem_HistoriaId",
                 table: "tb_personagem",
                 column: "HistoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tb_serie_historias_Nome",
+                table: "tb_serie_historias",
+                column: "Nome",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -87,6 +117,9 @@ namespace Storiify.Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_historia");
+
+            migrationBuilder.DropTable(
+                name: "tb_serie_historias");
 
             migrationBuilder.DropTable(
                 name: "tb_usuario");

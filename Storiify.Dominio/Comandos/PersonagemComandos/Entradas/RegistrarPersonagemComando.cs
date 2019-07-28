@@ -11,6 +11,7 @@ namespace Storiify.Dominio.Comandos.HistoriaComandos.Entradas
         #region Propriedades Api
 
         public string Nome { get; set; }
+        private string HistoriaId { get; set; }
 
         #endregion
 
@@ -55,7 +56,12 @@ namespace Storiify.Dominio.Comandos.HistoriaComandos.Entradas
 
         public Personagem GerarEntidade()
         {
-            return new Personagem(_nome);
+            return new Personagem(_nome, HistoriaId);
+        }
+
+        public void PegarId(string historiaId)
+        {
+            HistoriaId = historiaId;
         }
     }
 }

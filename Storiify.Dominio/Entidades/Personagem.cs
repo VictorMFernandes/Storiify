@@ -9,6 +9,7 @@ namespace Storiify.Dominio.Entidades
 
         public Nome Nome { get; private set; }
         public Foto Foto { get; private set; }
+        public string HistoriaId { get; private set; }
 
         #endregion
 
@@ -22,10 +23,11 @@ namespace Storiify.Dominio.Entidades
         /// <summary>
         /// Construtor principal
         /// </summary>
-        public Personagem(Nome nome)
+        public Personagem(Nome nome, string historiaId)
         {
             Nome = nome;
             Foto = new Foto();
+            HistoriaId = historiaId;
 
             Validar();
         }
@@ -33,8 +35,8 @@ namespace Storiify.Dominio.Entidades
         /// <summary>
         /// Construtor para semear
         /// </summary>
-        public Personagem(string id, Nome nome)
-            : this(nome)
+        public Personagem(string id, Nome nome, string historiaId)
+            : this(nome, historiaId)
         {
             Id = id;
         }

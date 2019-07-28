@@ -12,6 +12,7 @@ namespace Storiify.Dominio.Entidades
         public Foto Foto { get; private set; }
         public SerieHistorias SerieHistorias { get; private set; }
         public ICollection<Personagem> Personagens { get; private set; }
+        public string UsuarioId { get; private set; }
 
         #endregion
 
@@ -25,9 +26,11 @@ namespace Storiify.Dominio.Entidades
         /// <summary>
         /// Construtor principal
         /// </summary>
-        public Historia(Nome nome)
+        public Historia(Nome nome, SerieHistorias serieHistorias, string usuarioId)
         {
             Nome = nome;
+            SerieHistorias = serieHistorias;
+            UsuarioId = usuarioId;
             Foto = new Foto();
 
             Validar();
@@ -36,8 +39,8 @@ namespace Storiify.Dominio.Entidades
         /// <summary>
         /// Construtor para semear
         /// </summary>
-        public Historia(string id, Nome nome)
-            : this(nome)
+        public Historia(string id, Nome nome, SerieHistorias serieHistorias, string usuarioId)
+            : this(nome, serieHistorias, usuarioId)
         {
             Id = id;
         }

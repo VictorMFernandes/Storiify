@@ -40,24 +40,24 @@ namespace Storiify.Infra.BancoDeDados.Contexto
             var serieHistorias = new SerieHistorias(PadroesString.SerieHistoriasId, nome);
 
             nome = new Nome(PadroesString.Historia1Nome);
-            var historia = new Historia(PadroesString.Historia1Id, nome);
+            var historia = new Historia(PadroesString.Historia1Id, nome, serieHistorias, PadroesString.UsuarioId);
+            historia.DefinirSerieHistorias(serieHistorias);
 
             nome = new Nome(PadroesString.Personagem1Nome);
-            var personagem = new Personagem(PadroesString.Personagem1Id, nome);
+            var personagem = new Personagem(PadroesString.Personagem1Id, nome, PadroesString.Historia1Id);
 
-            historia.DefinirSerieHistorias(serieHistorias);
             historia.Personagens.Add(personagem);
 
             nome = new Nome(PadroesString.Personagem2Nome);
-            personagem = new Personagem(PadroesString.Personagem2Id, nome);
+            personagem = new Personagem(PadroesString.Personagem2Id, nome, PadroesString.Historia1Id);
 
-            historia.DefinirSerieHistorias(serieHistorias);
             historia.Personagens.Add(personagem);
 
             _historiaRepo.Criar(historia);
 
             nome = new Nome(PadroesString.Historia2Nome);
-            historia = new Historia(PadroesString.Historia2Id, nome);
+            historia = new Historia(PadroesString.Historia2Id, nome, serieHistorias, PadroesString.UsuarioId);
+            historia.DefinirSerieHistorias(serieHistorias);
 
             _historiaRepo.Criar(historia);
 

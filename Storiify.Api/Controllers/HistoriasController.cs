@@ -27,6 +27,7 @@ namespace Storiify.Api.Controllers
         [Route("v1/[controller]")]
         public async Task<IActionResult> RegistrarHistoria([FromBody]RegistrarHistoriaComando comando)
         {
+            comando.PegarId(UsuarioLogadoId);
             var resultado = await _gerenciador.Executar(comando);
             return await Resposta(resultado, _gerenciador.Notifications);
         }

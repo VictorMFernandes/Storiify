@@ -10,7 +10,7 @@ namespace Storiify.Dominio.Sistema.Exemplos
         public static RegistrarUsuarioComando RegistrarUsuario = new RegistrarUsuarioComando("Melissa Arroio Merlone dos Santos"
                 , "melissa@email.com", "senha", "senha");
 
-        public static RegistrarHistoriaComando RegistrarHistoria = new RegistrarHistoriaComando("O Senhor dos Anéis");
+        public static RegistrarHistoriaComando RegistrarHistoria = new RegistrarHistoriaComando("Harry Potter");
 
         public static RegistrarPersonagemComando RegistrarPersonagem = new RegistrarPersonagemComando("Aragorn");
 

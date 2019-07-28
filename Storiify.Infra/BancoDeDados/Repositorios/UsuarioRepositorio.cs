@@ -38,11 +38,12 @@ namespace Storiify.Infra.BancoDeDados.Repositorios
             {
                 conn.Open();
                 var resultado = await conn.QueryFirstOrDefaultAsync<AutenticarUsuarioComandoResultado>(query);
-
+                
                 if (resultado == null) return null;
 
-                query = $"SELECT Id, Nome, FotoUrl, FROM {HistoriaMap.Tabela} " +
-                        $"WHERE UsuarioId = '{resultado.Id}'";
+                query = $"SELECT h.Id, h.Nome, h.FotoUrl, sh.Nome AS NomeSerieHistorias FROM {HistoriaMap.Tabela} AS h " +
+                        $"INNER JOIN {SerieHistoriasMap.Tabela} AS sh ON h.SerieHistoriasId = sh.Id " +
+                        $"WHERE h.UsuarioId = '{resultado.Id}'";
 
                 resultado.Historias = await conn.QueryAsync<PegarHistoriasComandoResultado>(query);
 

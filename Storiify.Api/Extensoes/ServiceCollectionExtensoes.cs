@@ -36,6 +36,7 @@ namespace Storiify.Api.Extensoes
             // Repositórios
             services.AddTransient<IUsuarioRepositorio, UsuarioRepositorio>();
 
+            services.AddTransient<ISerieHistoriasRepositorio, SerieHistoriasRepositorio>();
             services.AddTransient<IHistoriaRepositorio, HistoriaRepositorio>();
             services.AddTransient<IPersonagemRepositorio, PersonagemRepositorio>();
             // Serviços

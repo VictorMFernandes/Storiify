@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Storiify.Compartilhado.Comandos;
 using Storiify.Dominio.Comandos.HistoriaComandos.Entradas;
+using Storiify.Dominio.Comandos.HistoriaComandos.Saidas;
 using Storiify.Dominio.Comandos.UsuarioComandos.Saidas;
+using Storiify.Dominio.Entidades;
 using Storiify.Dominio.Repositorios;
+using Storiify.Dominio.ValueObjects;
 
 namespace Storiify.Dominio.Gerenciadores
 {
@@ -25,16 +28,18 @@ namespace Storiify.Dominio.Gerenciadores
             if (!ValidarComando(comando))
                 return null;
 
-            if (string.IsNullOrEmpty(comando.SerieHistoriasId))
-            {
+            // Resolve a qual série de histórias essa história participará
+            SerieHistorias serieHistoria;
 
+            if (string.IsNullOrEmpty(comando.SerieHistoriasNome))
+            {
+                serieHistoria = null;
             }
             else
             {
-
+                serieHistoria = await _serieHistoriasRepo.PegarPorNome(comando.SerieHistoriasNome)
+                                        ?? new SerieHistorias(new Nome(comando.SerieHistoriasNome));
             }
-
-            var serieHistoria = await _serieHistoriasRepo.PegarPorNome(comando.SerieHistoriasNome);
 
             // Criar a entidade
             var historia = comando.GerarEntidade(serieHistoria);
@@ -48,7 +53,7 @@ namespace Storiify.Dominio.Gerenciadores
             _historiaRepo.Criar(historia);
 
             // Retornar o resultado para tela
-            return new RegistrarHistoriaComandoResultado(historia.Id, historia.ToString());
+            return new RegistrarHistoriaComandoResultado(historia);
         }
 
         #endregion

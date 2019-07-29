@@ -11,7 +11,6 @@ namespace Storiify.Dominio.Comandos.HistoriaComandos.Entradas
         #region Propriedades Api
 
         public string Nome { get; set; }
-        public string SerieHistoriasId { get; set; }
         public string SerieHistoriasNome { get; set; }
         private string UsuarioId { get; set; }
 

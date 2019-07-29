@@ -33,7 +33,6 @@ namespace Storiify.Infra.BancoDeDados.Repositorios
             var query = $"SELECT Id, Nome, Email, FotoUrl, Senha FROM {UsuarioMap.Tabela} " +
                                 $"WHERE Login = '{login}'";
             
-
             using (var conn = new SqliteConnection(Configuracoes.ConnString))
             {
                 conn.Open();

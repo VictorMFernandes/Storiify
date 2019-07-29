@@ -4,6 +4,7 @@ using Storiify.Infra.BancoDeDados.Transacoes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Storiify.Dominio.Comandos.HistoriaComandos.Entradas;
+using Storiify.Dominio.Comandos.HistoriaComandos.Saidas;
 
 namespace Storiify.Api.Controllers
 {

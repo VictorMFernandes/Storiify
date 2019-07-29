@@ -8,6 +8,7 @@ namespace Storiify.Infra.BancoDeDados.Contexto
     public class BancoContexto : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<SerieHistorias> SeriesHistorias { get; set; }
         public DbSet<Historia> Historias { get; set; }
         public DbSet<Personagem> Personagens { get; set; }
 
